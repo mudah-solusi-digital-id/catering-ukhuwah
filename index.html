@@ -1,0 +1,1220 @@
+<title>Catering Ukhuwah</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* ============================================================
+   DESIGN PLAN
+   Color: white-dominant surface, almost no color until the one
+   decision that matters: green for "go ahead and contact us"
+   (the Telepon/WhatsApp buttons), amber for the trust signals
+   (rating, pills, testimonial marks). Two accents, one job each.
+   Type: Fraunces for the wordmark and headings, pairing well with
+   warm, home-style catering branding, Inter for everything
+   read at length and all numbers.
+   Layout: a real top nav anchors the page like a product site;
+   the hero pairs the pitch with a live info card (rating, hours,
+   address, contact) instead of one badge; Lokasi closes with a
+   real embedded Google Maps location.
+   ============================================================ */
+:root{
+  --bg:#FFFFFF;
+  --surface:#E9FBF0;
+  --surface-2:#D3F5DE;
+  --ink:#15202B;
+  --ink-soft:#4F6B82;
+  --line:#8CE6A8;
+  --green:#22C55E;
+  --green-ink:#16A34A;
+  --amber:#B9842C;
+  --focus:#22C55E;
+  --pink:#F6A8C9;
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1B26;
+    --surface:#142A1F;
+    --surface-2:#1B3B2A;
+    --ink:#EAFBF1;
+    --ink-soft:#9FDAC2;
+    --line:#7FE8A0;
+    --green:#4ADE80;
+    --green-ink:#86EFAC;
+    --amber:#E0A857;
+    --focus:#4ADE80;
+    --pink:#F9B8D4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1B26;
+  --surface:#142A1F;
+  --surface-2:#1B3B2A;
+  --ink:#EAFBF1;
+  --ink-soft:#9FDAC2;
+  --line:#7FE8A0;
+  --green:#4ADE80;
+  --green-ink:#86EFAC;
+  --amber:#E0A857;
+  --focus:#4ADE80;
+  --pink:#F9B8D4;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box;}
+body{background:var(--bg); color:var(--ink); font-family:var(--font-body); line-height:1.6; margin:0;}
+body::before{
+  content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
+  z-index:30; background:var(--bg);
+}
+.wrap{
+  max-width:1080px; margin:0 auto;
+  padding-left:max(20px, env(safe-area-inset-left,0px));
+  padding-right:max(20px, env(safe-area-inset-right,0px));
+}
+h1,h2{font-family:var(--font-display); margin:0; text-wrap:balance;}
+p{margin:0;}
+a{color:inherit;}
+.eyebrow{font-size:0.76rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); display:flex; align-items:center; gap:0.5em;}
+.eyebrow::before{content:""; display:inline-block; width:18px; height:3px; border-radius:2px; background:var(--pink); flex-shrink:0;}
+hr.rule{height:1px; background:var(--line); border:none;}
+
+.btn{
+  display:inline-flex; align-items:center; gap:0.5em;
+  font-weight:600; font-size:0.95rem;
+  padding:0.8em 1.4em; border-radius:999px; border:none;
+  cursor:pointer; text-decoration:none; white-space:nowrap;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+.btn-primary{background:var(--green); color:#fff; box-shadow:0 6px 16px -6px rgba(34,197,94,0.5);}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 20px -6px rgba(34,197,94,0.55);}
+.btn-outline{background:transparent; border:1.5px solid var(--line); color:var(--ink);}
+.btn-outline:hover{border-color:var(--green-ink); color:var(--green-ink);}
+.btn-sm{padding:0.55em 1.1em; font-size:0.85rem;}
+.btn-copy{background:var(--surface); border:1.5px solid var(--line); color:var(--ink-soft); font-size:0.85rem; padding:0.55em 1em;}
+.btn-copy:hover{border-color:var(--green-ink);}
+.btn-copy[data-copied="1"]{color:var(--green-ink); border-color:var(--green-ink);}
+
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  background:var(--bg); border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  display:flex; align-items:center; gap:1.4rem;
+  padding-block:0.9rem;
+}
+.nav-logo{font-family:var(--font-display); font-weight:700; font-size:1.25rem; white-space:nowrap;}
+.nav-links{display:flex; gap:1.3rem; flex:1; font-size:0.9rem; color:var(--ink-soft);}
+.nav-links a{text-decoration:none;}
+.nav-links a:hover{color:var(--ink);}
+.nav-actions{display:flex; align-items:center; gap:0.6rem;}
+@media (max-width:760px){ .nav-links{display:none;} }
+
+.admin-panel{
+  display:none; background:var(--surface-2); border-bottom:1px solid var(--line);
+}
+.admin-panel.open{display:block;}
+.admin-panel-inner{padding-block:1rem; position:relative; max-height:75vh; overflow-y:auto;}
+.admin-view{font-size:0.9rem;}
+.admin-x{position:absolute; top:0; right:0; background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:1.4rem; line-height:1; padding:0.2rem 0.4rem;}
+.admin-login-form{display:flex; flex-wrap:wrap; align-items:center; gap:0.6rem; padding-right:2.4rem;}
+.admin-login-form label{font-size:0.88rem; font-weight:600; width:100%;}
+.admin-login-form input{font:inherit; padding:0.6em 0.9em; border-radius:10px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); min-width:160px;}
+.admin-login-form input:focus-visible{outline:3px solid var(--focus); outline-offset:1px;}
+.admin-error{font-size:0.82rem; color:#C23A3A; width:100%;}
+.admin-edit-head{display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding-right:2.4rem; margin-bottom:0.3rem;}
+.admin-edit-head-actions{display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;}
+.admin-note{font-size:0.82rem; color:var(--ink-soft); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:0.6rem 0.8rem; margin-bottom:1rem;}
+.admin-edit-form{display:flex; flex-direction:column; gap:1.3rem;}
+.admin-group-title{font-size:0.76rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:0.6rem;}
+.admin-field{display:flex; flex-direction:column; gap:0.3rem;}
+.admin-field label{font-size:0.84rem; font-weight:600;}
+.admin-field input[type="text"], .admin-field textarea{font:inherit; padding:0.6em 0.8em; border-radius:10px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); resize:vertical; width:100%;}
+.admin-field textarea{min-height:3.2em;}
+.admin-field input:focus-visible, .admin-field textarea:focus-visible{outline:3px solid var(--focus); outline-offset:1px;}
+.admin-field-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.8rem 1rem;}
+.admin-field-row:has(.admin-img-row){grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+.admin-img-row{display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;}
+.admin-img-preview{width:64px; height:80px; object-fit:cover; border-radius:8px; border:1px solid var(--line); background:var(--surface); flex-shrink:0;}
+.admin-img-row input[type="file"]{font-size:0.78rem; max-width:150px;}
+.admin-img-row .btn{flex-shrink:0;}
+.admin-img-row input[type="text"]{font:inherit; padding:0.5em 0.8em; border-radius:10px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink); max-width:220px;}
+.admin-gallery-list{display:flex; flex-direction:column; gap:0.9rem;}
+.admin-edit-actions{display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-top:0.2rem; padding-top:0.9rem; border-top:1px solid var(--line);}
+.admin-save-msg{font-size:0.85rem; color:var(--green-ink); font-weight:600;}
+.admin-pw-change{display:none; gap:0.6rem; flex-wrap:wrap; align-items:center; margin-top:0.6rem; padding-top:0.6rem; border-top:1px solid var(--line);}
+.admin-pw-change.open{display:flex;}
+.admin-pw-change input{font:inherit; padding:0.5em 0.8em; border-radius:10px; border:1.5px solid var(--line); background:var(--bg); color:var(--ink);}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:2.6rem 2.4rem;}
+.hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:2.4rem; align-items:start;}
+@media (max-width:760px){ .hero-grid{grid-template-columns:1fr; gap:1.6rem;} }
+.hero-copy{display:flex; flex-direction:column; gap:1rem;}
+.hero-tags{display:flex; flex-wrap:wrap; gap:0.5rem;}
+.tag{
+  display:inline-flex; align-items:center; font-size:0.78rem; font-weight:600;
+  padding:0.35em 0.9em; border-radius:999px; background:var(--surface); color:var(--ink-soft);
+  border:1px solid var(--line);
+}
+.hero h1{font-size:clamp(2.2rem, 6vw, 3.2rem); line-height:1.05; font-weight:700; position:relative;}
+.hero h1::after{content:""; display:block; width:64px; height:4px; margin-top:0.7rem; border-radius:2px; background:var(--pink);}
+.hero-tagline{font-size:1.08rem; color:var(--ink-soft); max-width:38ch;}
+.hero-actions{display:flex; flex-wrap:wrap; gap:0.7rem; margin-top:0.2rem;}
+
+.info-card{
+  background:var(--bg); border:1px solid var(--line); border-radius:10px;
+  padding:0 1.3rem; display:flex; flex-direction:column;
+}
+.info-card .full{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;
+  padding:0.9rem 0; border-bottom:1px solid var(--line);
+}
+.info-card .full:last-child{border-bottom:none;}
+.info-card .label{font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); flex-shrink:0; padding-top:0.15rem;}
+.info-card .rating-pill{display:inline-flex; align-items:center; gap:0.35em; font-weight:700; font-variant-numeric:tabular-nums;}
+.info-card .rating-pill .stars{color:var(--amber);}
+.info-card .value{font-size:0.95rem; font-weight:600; font-variant-numeric:tabular-nums; text-align:right;}
+.info-card .value-sm{font-size:0.88rem; line-height:1.45; text-align:right;}
+.info-card .muted-tag{font-size:0.78rem; color:var(--ink-soft); font-weight:400;}
+
+section{padding-block:2.6rem;}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:1.6rem;}
+.section-head .head-text{max-width:48ch;}
+.section-head h2{font-size:clamp(1.5rem,3.4vw,1.95rem); font-weight:700;}
+.section-head .see-all{font-size:0.88rem; font-weight:600; color:var(--green-ink); text-decoration:none; white-space:nowrap;}
+.section-head .see-all:hover{text-decoration:underline;}
+
+/* ---------- About ---------- */
+.about-body{font-size:1.04rem; color:var(--ink-soft); max-width:64ch;}
+.about-body strong{color:var(--ink); font-weight:600;}
+.trust-note{
+  margin-top:1.1rem; display:flex; gap:0.7rem; align-items:flex-start;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  padding:0.9rem 1.1rem; font-size:0.9rem; color:var(--ink-soft); max-width:60ch;
+}
+.trust-note svg{flex-shrink:0; width:20px; height:20px; color:var(--green-ink); margin-top:0.1rem;}
+.tentang-layout{display:flex; gap:2.2rem; align-items:stretch; margin-top:1.6rem;}
+@media (max-width:760px){ .tentang-layout{flex-direction:column; gap:1.6rem;} }
+.keunggulan-grid{display:flex; flex-direction:column; gap:1.3rem; flex:1; min-width:0;}
+.keunggulan-item{border-top:3px solid var(--line); padding-top:0.9rem; min-width:0;}
+.keunggulan-item .num{font-family:var(--font-display); font-size:1.3rem; color:var(--amber); font-weight:600;}
+.keunggulan-item h3{font-size:1rem; font-weight:700; margin-top:0.3rem;}
+.keunggulan-item p{font-size:0.88rem; color:var(--ink-soft); margin-top:0.3rem;}
+
+.tentang-photo-panel{width:240px; flex-shrink:0;}
+@media (max-width:760px){ .tentang-photo-panel{width:100%; max-width:300px; margin:0 auto;} }
+.tentang-photo-frame{position:relative; width:100%; height:100%; min-height:300px; aspect-ratio:3/4; overflow:hidden; border-radius:14px; border:1px solid var(--line); background:var(--surface);}
+.tentang-photo-track{display:flex; flex-direction:column; width:100%; height:100%;}
+.tentang-photo-slide{position:relative; width:100%; height:100%; flex:0 0 100%;}
+.tentang-photo-slide img{width:100%; height:100%; object-fit:cover; display:block;}
+.tentang-photo-slide .cap{
+  position:absolute; left:0; right:0; bottom:0; padding:0.6rem 0.75rem;
+  font-size:0.74rem; line-height:1.35; font-weight:500; color:#fff;
+  background:linear-gradient(to top, rgba(0,0,0,0.62), rgba(0,0,0,0));
+}
+.tentang-photo-empty{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; height:100%; color:var(--ink-soft); font-size:0.82rem; text-align:center; padding:1.2rem;}
+.tentang-photo-empty svg{opacity:0.5;}
+
+/* ---------- Services ---------- */
+.service-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;}
+@media (max-width:760px){ .service-grid{grid-template-columns:repeat(2,1fr);} }
+.service-card{
+  position:relative; aspect-ratio:3/4; border-radius:16px; overflow:hidden;
+  border:1px solid var(--line); min-width:0; display:flex; align-items:flex-end;
+}
+.service-card img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;}
+.service-num{
+  position:absolute; top:0.8rem; left:0.8rem; z-index:2;
+  font-family:var(--font-display); font-size:0.95rem; font-weight:600; color:var(--amber);
+  background:rgba(255,255,255,0.92); border-radius:999px; width:1.9em; height:1.9em;
+  display:flex; align-items:center; justify-content:center;
+}
+.service-overlay{
+  position:relative; z-index:1; width:100%; padding:1rem 1rem 1.1rem;
+  background:linear-gradient(to top, rgba(10,20,15,0.8), rgba(10,20,15,0.18) 70%, transparent);
+}
+.service-card h3{font-size:1rem; font-weight:700; color:#fff;}
+.service-card p{font-size:0.82rem; color:rgba(255,255,255,0.9);}
+.service-note{margin-top:1.2rem; font-size:0.92rem; color:var(--ink-soft);}
+.service-note a{color:var(--green-ink); font-weight:600; text-decoration:underline;}
+
+/* ---------- Testimonials ---------- */
+.testi-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1rem;}
+@media (max-width:700px){ .testi-grid{grid-template-columns:1fr;} }
+.testi-card{
+  background:var(--bg); border:1px solid var(--line); border-radius:10px;
+  padding:1.3rem 1.4rem; display:flex; flex-direction:column; gap:0.7rem; min-width:0;
+}
+.testi-mark{font-family:var(--font-display); font-style:italic; font-size:2.1rem; color:var(--amber); line-height:0.5; height:0.6em;}
+.testi-quote{font-size:0.98rem; color:var(--ink);}
+.testi-who{font-size:0.84rem; color:var(--ink-soft); display:flex; align-items:center; gap:0.5em;}
+.testi-who .stars{color:var(--amber); letter-spacing:0.08em;}
+
+/* ---------- Photo gallery ---------- */
+.gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0.9rem;}
+@media (max-width:760px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
+.gallery-slot{
+  position:relative; aspect-ratio:4/5; border-radius:16px; overflow:hidden;
+  background:repeating-linear-gradient(45deg, var(--surface) 0 10px, var(--bg) 10px 20px);
+  border:1.5px dashed var(--line);
+  display:flex; align-items:center; justify-content:center;
+}
+.gallery-slot.has-photo{border-style:solid; border-color:var(--line);}
+.gallery-slot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;}
+.gallery-slot .cap{position:absolute; left:0; right:0; bottom:0; padding:0.5rem 0.6rem; font-size:0.74rem; color:#fff; background:linear-gradient(to top, rgba(0,0,0,0.55), transparent);}
+.gallery-slot .slot-hint{display:flex; flex-direction:column; align-items:center; gap:0.4rem; color:var(--ink-soft); font-size:0.78rem; text-align:center; padding:0 0.6rem;}
+.gallery-slot .slot-hint svg{width:26px; height:26px; color:var(--green-ink); opacity:0.7;}
+.gallery-note{margin-top:1.1rem; font-size:0.9rem; color:var(--ink-soft);}
+
+/* ---------- Location ---------- */
+.location-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; align-items:stretch;}
+@media (max-width:700px){ .location-grid{grid-template-columns:1fr;} }
+.loc-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  padding:1.4rem 1.5rem; display:flex; flex-direction:column; gap:1rem; min-width:0;
+}
+.loc-pin{display:flex; gap:0.8rem; align-items:flex-start;}
+.loc-pin svg{flex-shrink:0; width:24px; height:24px; color:var(--green-ink);}
+.loc-address .muted{color:var(--ink-soft); font-size:0.88rem; display:block; margin-top:0.25rem;}
+.hours-row{display:flex; justify-content:space-between; font-size:0.95rem; padding:0.5rem 0; border-bottom:1px solid var(--line);}
+.hours-row:last-child{border-bottom:none;}
+.hours-row span:last-child{font-weight:600; font-variant-numeric:tabular-nums; text-align:right;}
+.hours-note{font-size:0.85rem; color:var(--ink-soft);}
+.map-card{
+  background:var(--surface-2); border:1px solid var(--line); border-radius:16px;
+  min-height:220px; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.map-card svg{width:100%; height:100%;}
+.map-card .map-label{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-115%);
+  background:var(--ink); color:var(--bg); font-size:0.78rem; font-weight:600;
+  padding:0.3em 0.7em; border-radius:8px; white-space:nowrap;
+}
+.map-card .map-note{position:absolute; left:0; right:0; bottom:0; padding:0.5rem 0.7rem; font-size:0.72rem; text-align:center; color:var(--ink-soft); background:linear-gradient(to top, var(--surface-2), transparent);}
+
+/* ---------- Final CTA ---------- */
+.cta-final{
+  background:var(--surface); color:var(--ink); border-radius:18px; padding:2.6rem 2rem;
+  text-align:center; display:flex; flex-direction:column; align-items:center; gap:1rem;
+  margin-block:0.6rem 2rem; border:1px solid var(--line);
+}
+.cta-icon{width:40px; height:40px; margin-bottom:0.1rem; color:var(--green-ink);}
+.cta-final h2{font-size:clamp(1.6rem,3.8vw,2.1rem); max-width:26ch;}
+.cta-final p{color:var(--ink-soft); max-width:42ch;}
+.cta-row{display:flex; flex-wrap:wrap; gap:0.7rem; justify-content:center; margin-top:0.4rem; align-items:center;}
+.phone-number{font-variant-numeric:tabular-nums; font-weight:700;}
+
+footer.credit{padding-block:1.8rem 2.4rem; text-align:center; font-size:0.85rem; color:var(--ink-soft);}
+footer.credit a{color:var(--green-ink); font-weight:600; text-decoration:underline;}
+footer.credit .credit-line{margin-top:0.3rem;}
+
+@media (prefers-reduced-motion: reduce){ .btn{transition:none;} }
+</style>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <span class="nav-logo">Catering Ukhuwah</span>
+    <div class="nav-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#layanan">Layanan</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#lokasi">Lokasi</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-primary btn-sm f-wa-href" data-wa-msg="Halo Catering Ukhuwah, saya mau tanya paket acara" href="https://wa.me/6285299482475?text=Halo%20Catering%20Ukhuwah%2C%20saya%20mau%20tanya%20paket%20acara" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</nav>
+<div class="admin-panel" id="adminPanel">
+  <div class="wrap admin-panel-inner">
+
+    <div id="adminLoginView" class="admin-view">
+      <button type="button" id="adminClose" class="admin-x" aria-label="Tutup">&times;</button>
+      <form id="adminLoginForm" class="admin-login-form">
+        <label for="adminPwInput">Masuk sebagai admin</label>
+        <input type="password" id="adminPwInput" placeholder="Password admin" autocomplete="off">
+        <button type="submit" class="btn btn-primary btn-sm">Masuk</button>
+        <span id="adminLoginError" class="admin-error" hidden>Password salah, coba lagi.</span>
+      </form>
+    </div>
+
+    <div id="adminEditView" class="admin-view" hidden>
+      <button type="button" id="adminClose2" class="admin-x" aria-label="Tutup">&times;</button>
+      <div class="admin-edit-head">
+        <strong>Panel Admin Catering Ukhuwah</strong>
+        <div class="admin-edit-head-actions">
+          <button type="button" id="adminChangePwToggle" class="btn btn-outline btn-sm">Ganti Password</button>
+          <button type="button" id="adminLogout" class="btn btn-outline btn-sm">Keluar</button>
+        </div>
+      </div>
+      <div id="adminPwChange" class="admin-pw-change">
+        <input type="password" id="adminPwNew" placeholder="Password baru">
+        <input type="password" id="adminPwConfirm" placeholder="Ulangi password baru">
+        <button type="button" id="adminPwSave" class="btn btn-primary btn-sm">Simpan Password</button>
+        <span id="adminPwMsg" class="admin-save-msg" hidden>Password diganti.</span>
+      </div>
+      <p class="admin-note">Perubahan yang disimpan di sini langsung tersimpan ke database dan bisa dibuka dari perangkat mana saja.</p>
+      <form id="adminEditForm" class="admin-edit-form"></form>
+      <div class="admin-edit-actions">
+        <button type="submit" form="adminEditForm" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+        <button type="button" id="adminReset" class="btn btn-outline btn-sm">Kembalikan ke Default</button>
+        <span id="adminSaveMsg" class="admin-save-msg" hidden>Tersimpan.</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Catering &middot; Makassar</p>
+        <h1>Catering Ukhuwah</h1>
+        <p class="hero-tagline" id="f-tagline">Catering di Jalan Perintis Kemerdekaan Km 14, Makassar, dengan rating 4,9 dari 748 ulasan Google.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary f-telp-href" href="tel:+6285299482475">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.9c0-.5.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1L6.6 10.8Z"/></svg>
+            Telepon <span class="f-telp-text">0852 9948 2475</span>
+          </a>
+          <a class="btn btn-outline f-wa-href" data-wa-msg="Halo Catering Ukhuwah, saya mau tanya paket acara" href="https://wa.me/6285299482475?text=Halo%20Catering%20Ukhuwah%2C%20saya%20mau%20tanya%20paket%20acara" target="_blank" rel="noopener">WhatsApp <span class="f-wa-text">0852 9948 2475</span></a>
+          <a class="btn btn-outline" href="https://www.google.com/maps/place/Catering+Ukhuwah/@-5.1153914,119.5124917,17z/data=!3m1!4b1!4m6!3m5!1s0x2dbefcafffffffff:0xd0ae84ef6e396b24!8m2!3d-5.1153914!4d119.5124917!16s%2Fg%2F11c1xhw0zt" target="_blank" rel="noopener">Buka di Google Maps</a>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="full">
+          <div class="label">Rating Google</div>
+          <span class="rating-pill"><span class="value"><span id="f-ratingValue">4.9</span> dari <span id="f-ratingCount">748 ulasan</span></span> <span class="stars">★★★★★</span></span>
+        </div>
+        <div class="full">
+          <div class="label">Jam</div>
+          <div class="value">Setiap hari, <span class="f-jam-buka">08.00</span> sampai <span class="f-jam-tutup">17.00</span></div>
+        </div>
+        <div class="full">
+          <div class="label">Alamat</div>
+          <div class="value value-sm" id="f-alamatCombined">Jl. Perintis Kemerdekaan No. Km 14, RW. 2, Daya, Kec. Biringkanaya, Kota Makassar, Sulawesi Selatan 90241</div>
+        </div>
+        <div class="full">
+          <div class="label">Kontak</div>
+          <div class="value value-sm"><span class="f-wa-text">0852 9948 2475</span> (nomor HP)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <hr class="rule">
+
+  <section id="tentang">
+    <div class="section-head"><div class="head-text"><p class="eyebrow">Tentang Kami</p><h2 id="f-aboutHeading">Lahir dari Kepercayaan Masyarakat</h2></div></div>
+    <p class="about-body" id="f-aboutBody">Catering Ukhuwah berlokasi di Jalan Perintis Kemerdekaan Km 14, Makassar. Di Google Maps, usaha ini mendapat rating 4,9 dari 748 ulasan pelanggan.</p>
+    <div class="trust-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <span><strong>Catering Ukhuwah hanya memiliki satu lokasi resmi</strong>, di Jalan Perintis Kemerdekaan Km 14, Daya. Untuk menghindari kesalahan pesan ke pihak yang mengatasnamakan nama serupa, selalu hubungi lewat nomor resmi di halaman ini.</span>
+    </div>
+    <div class="tentang-layout">
+      <div class="keunggulan-grid">
+        <div class="keunggulan-item">
+          <div class="num">01</div>
+          <h3>Dipercaya ratusan pelanggan</h3>
+          <p>748 orang sudah menuliskan pengalamannya di Google Maps.</p>
+        </div>
+        <div class="keunggulan-item">
+          <div class="num">02</div>
+          <h3>Penilaian pelanggan sangat tinggi</h3>
+          <p>Rating rata-rata 4,9 dari 5 bintang.</p>
+        </div>
+        <div class="keunggulan-item">
+          <div class="num">03</div>
+          <h3>Pelayanan, rasa, dan halal</h3>
+          <p>Pelanggan memuji pelayanan dan pramusaji yang profesional, menu yang enak, kemasan premium, pengerjaan yang cepat, serta hidangan yang halal.</p>
+        </div>
+      </div>
+      <div class="tentang-photo-panel">
+        <div class="tentang-photo-frame">
+          <div class="tentang-photo-track" id="tentangFotoTrack"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="layanan">
+    <div class="section-head"><div class="head-text"><p class="eyebrow">Layanan Katering</p><h2>Untuk Setiap Jenis Acara</h2></div></div>
+    <div class="service-grid">
+      <div class="service-card">
+        <span class="service-num">01</span>
+        <img src="icons/aqiqah-syukuran.png" alt="Ilustrasi paket aqiqah dan syukuran" loading="lazy">
+        <div class="service-overlay">
+          <h3>Aqiqah &amp; Syukuran</h3>
+          <p id="f-layanan0">Paket aqiqah dan syukuran lengkap, menu yang paling banyak dipercaya pelanggan.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02</span>
+        <img src="icons/kambing-guling.png" alt="Ilustrasi kambing guling" loading="lazy">
+        <div class="service-overlay">
+          <h3>Kambing Guling</h3>
+          <p id="f-layanan1">Kambing guling utuh untuk acara spesial, jadi menu favorit yang paling sering dipesan.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03</span>
+        <img src="icons/gulai-kambing.png" alt="Ilustrasi gulai kambing" loading="lazy">
+        <div class="service-overlay">
+          <h3>Gulai Kambing</h3>
+          <p id="f-layanan2">Gulai kambing dan olahan kambing lainnya, disiapkan halal dengan resep khas.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">04</span>
+        <img src="icons/acara-kantor.png" alt="Ilustrasi katering acara kantor" loading="lazy">
+        <div class="service-overlay">
+          <h3>Acara Kantor</h3>
+          <p id="f-layanan3">Nasi kotak atau prasmanan untuk rapat, ulang tahun kantor, dan acara kantor lainnya.</p>
+        </div>
+      </div>
+    </div>
+    <p class="service-note">Menu dan paket harga menyesuaikan jenis acara. <a class="f-wa-href" href="https://wa.me/6285299482475" target="_blank" rel="noopener">Hubungi kami langsung</a> untuk penawaran lengkap.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="galeri">
+    <div class="section-head"><div class="head-text"><p class="eyebrow">Galeri Foto</p><h2>Suasana &amp; Hidangan Kami</h2></div></div>
+    <div class="gallery-grid" id="galeriGrid">
+      <div class="gallery-slot">
+        <div class="slot-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.2-2h5.6L16 6"/></svg><span>Foto segera ditambahkan</span></div>
+      </div>
+    </div>
+    <p class="gallery-note">Foto di galeri ini bisa ditambah atau dihapus kapan saja lewat panel admin, jumlahnya tidak dibatasi.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="ulasan">
+    <div class="section-head">
+      <div class="head-text"><p class="eyebrow">Ulasan Google</p><h2>Kata Pelanggan</h2></div>
+      <a class="see-all" href="https://www.google.com/maps/place/Catering+Ukhuwah/@-5.1153914,119.5124917,17z/data=!3m1!4b1!4m6!3m5!1s0x2dbefcafffffffff:0xd0ae84ef6e396b24!8m2!3d-5.1153914!4d119.5124917!16s%2Fg%2F11c1xhw0zt" target="_blank" rel="noopener">Lihat semua ulasan di Google Maps &rarr;</a>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <span class="testi-mark" aria-hidden="true">&ldquo;</span>
+        <p class="testi-quote" id="f-testiQuote0">Acara syukuran kemarin di rumah, kami percayakan ke Catering Ukhuwah. Kenapa Catering Ukhuwah? Karena kami banyak direkomendasikan keluarga dan teman. Setelah kami coba, Catering Ukhuwah selain memberikan service yang baik (dekorasi dan plating plus pramusaji yang profesional) juga menghadirkan beragam menu yang semuanya enak dan sangat memanjakan lidah. Soal harga, tinggal sesuaikan sama budget. Ada paket ekonomis hingga paket Sultan.</p>
+        <div class="testi-who"><span class="stars" aria-hidden="true">★★★★★</span> <span id="f-testiName0">Aina Thalita</span>, ulasan Google</div>
+      </div>
+      <div class="testi-card">
+        <span class="testi-mark" aria-hidden="true">&ldquo;</span>
+        <p class="testi-quote" id="f-testiQuote1">MasyaAllah, pelayanan Catering Ukhuwah sangat baik, mulai dari pelayanan hingga hidangannya. Terima kasih banyak atas kerja sama dan pelayanannya.</p>
+        <div class="testi-who"><span class="stars" aria-hidden="true">★★★★★</span> <span id="f-testiName1">Murni Mahmud</span>, ulasan Google</div>
+      </div>
+      <div class="testi-card">
+        <span class="testi-mark" aria-hidden="true">&ldquo;</span>
+        <p class="testi-quote" id="f-testiQuote2">Catering yang gercep, sat set, dari segi rasa sangat memuaskan, packaging premium, dan yang pastinya Halalan Thoyyiban, pastinya highly recommended.</p>
+        <div class="testi-who"><span class="stars" aria-hidden="true">★★★★★</span> <span id="f-testiName2">Yusufefendy C21best</span>, ulasan Google</div>
+      </div>
+      <div class="testi-card">
+        <span class="testi-mark" aria-hidden="true">&ldquo;</span>
+        <p class="testi-quote" id="f-testiQuote3">Alhamdulillah menunya enak, lezat, halal. Kambingnya tidak bau sama sekali, empuk lagi. Ukhuwah Sidrap sudah pernah coba order, tidak mengecewakan, Ukhuwah di Makassar juga luar biasa. Biar beda cabang tapi kualitas tetap terjaga.</p>
+        <div class="testi-who"><span class="stars" aria-hidden="true">★★★★★</span> <span id="f-testiName3">Iira Yuanita</span>, ulasan Google</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="lokasi">
+    <div class="section-head"><div class="head-text"><p class="eyebrow">Lokasi &amp; Jam</p><h2>Kunjungi Kami</h2></div></div>
+    <div class="location-grid">
+      <div class="loc-card">
+        <div class="loc-pin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <div class="loc-address">
+            <span id="f-alamatJalan">Jl. Perintis Kemerdekaan No. Km 14, RW. 2, Daya</span>
+            <span class="muted" id="f-alamatKota">Kec. Biringkanaya, Kota Makassar, Sulawesi Selatan 90241</span>
+          </div>
+        </div>
+        <div class="hours-row"><span>Jam operasional</span><span>Setiap hari, <span class="f-jam-buka">08.00</span> sampai <span class="f-jam-tutup">17.00</span></span></div>
+        <p class="hours-note">Untuk ketersediaan tanggal acara, mohon konfirmasi langsung lewat kontak di bawah.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+          <button class="btn btn-copy" type="button" id="copyAlamatBtn" data-copy="Jl. Perintis Kemerdekaan No. Km 14, RW. 2, Daya, Kec. Biringkanaya, Kota Makassar, Sulawesi Selatan 90241">Salin alamat</button>
+          <button class="btn btn-copy" type="button" id="copyWaBtn" data-copy="0852 9948 2475">Salin WA</button>
+        </div>
+      </div>
+      <div class="map-card">
+        <iframe src="https://www.google.com/maps?q=-5.1153914,119.5124917&z=17&output=embed" width="100%" height="100%" style="border:0; min-height:220px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi Catering Ukhuwah"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-final">
+    <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 18h16"/><path d="M5 18a7 7 0 0 1 14 0"/><path d="M12 7V5"/><circle cx="12" cy="4" r="1"/></svg>
+    <h2>Pesan Catering Ukhuwah</h2>
+    <p>Tanyakan menu, harga, dan jadwal pesanan langsung lewat WhatsApp atau telepon.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary f-wa-href" data-wa-msg="Halo Catering Ukhuwah, saya mau pesan untuk acara" href="https://wa.me/6285299482475?text=Halo%20Catering%20Ukhuwah%2C%20saya%20mau%20pesan%20untuk%20acara" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.1-.6-.1-.3-.7-1.7-1-2.3-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.1 1.7 2.6 4.1 3.6 2.4 1 2.4.7 2.8.6.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1 0-.1-.2-.2-.5-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>
+        Chat WhatsApp
+      </a>
+      <a class="btn btn-outline f-telp-href" href="tel:+6285299482475">Telepon <span class="f-telp-text">0852 9948 2475</span></a>
+      <a class="btn btn-outline" href="https://www.google.com/maps/place/Catering+Ukhuwah/@-5.1153914,119.5124917,17z/data=!3m1!4b1!4m6!3m5!1s0x2dbefcafffffffff:0xd0ae84ef6e396b24!8m2!3d-5.1153914!4d119.5124917!16s%2Fg%2F11c1xhw0zt" target="_blank" rel="noopener">Petunjuk arah</a>
+    </div>
+  </div>
+
+  <footer class="credit">
+    <div class="credit-line">Dirancang oleh <a href="https://hafshahsupriati.github.io" target="_blank" rel="noopener">Hafshah Supriati</a> &middot; Jasa Pembuatan Website UMKM</div>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      function marked(){
+        var original = btn.textContent;
+        btn.setAttribute('data-copied','1');
+        btn.textContent = 'Tersalin!';
+        setTimeout(function(){ btn.textContent = original; btn.removeAttribute('data-copied'); }, 1600);
+      }
+      try{ navigator.clipboard.writeText(text).then(marked).catch(fallback); }
+      catch(e){ fallback(); }
+      function fallback(){
+        try{
+          var ta = document.createElement('textarea');
+          ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+          document.body.appendChild(ta); ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          marked();
+        }catch(e){}
+      }
+    });
+  });
+  /* ---------------- Admin panel (tersambung ke database Supabase) ---------------- */
+  var SUPABASE_URL = 'https://depxikjsyckyejfxylwz.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_sx7AGsC2Sd_QamBDhZkHTg_Z6YnQjrc';
+  var SLUG = 'catering-ukhuwah';
+  var sb = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+  var DATA_CACHE_KEY = 'ukhuwahCms_cache_v1';
+  var LOGIN_KEY = 'ukhuwahCms_loggedin_v1';
+  var PW_RUNTIME_KEY = 'ukhuwahCms_pw_runtime_v1';
+
+  var DEFAULTS = {
+    wa:'0852 9948 2475', telp:'0852 9948 2475',
+    alamatJalan:'Jl. Perintis Kemerdekaan No. Km 14, RW. 2, Daya',
+    alamatKota:'Kec. Biringkanaya, Kota Makassar, Sulawesi Selatan 90241',
+    jamTutup:'17.00', jamBukaNote:'08.00',
+    ratingValue:'4.9', ratingCount:'748 ulasan',
+    tagline:'Catering di Jalan Perintis Kemerdekaan Km 14, Makassar, dengan rating 4,9 dari 748 ulasan Google.',
+    aboutHeading:'Lahir dari Kepercayaan Masyarakat',
+    aboutBody:'Catering Ukhuwah berlokasi di Jalan Perintis Kemerdekaan Km 14, Makassar. Di Google Maps, usaha ini mendapat rating 4,9 dari 748 ulasan pelanggan.',
+    layanan0:'Paket aqiqah dan syukuran lengkap, menu yang paling banyak dipercaya pelanggan.',
+    layanan1:'Kambing guling utuh untuk acara spesial, jadi menu favorit yang paling sering dipesan.',
+    layanan2:'Gulai kambing dan olahan kambing lainnya, disiapkan halal dengan resep khas.',
+    layanan3:'Nasi kotak atau prasmanan untuk rapat, ulang tahun kantor, dan acara kantor lainnya.',
+    testiQuote0:'Acara syukuran kemarin di rumah, kami percayakan ke Catering Ukhuwah. Kenapa Catering Ukhuwah? Karena kami banyak direkomendasikan keluarga dan teman. Setelah kami coba, Catering Ukhuwah selain memberikan service yang baik (dekorasi dan plating plus pramusaji yang profesional) juga menghadirkan beragam menu yang semuanya enak dan sangat memanjakan lidah. Soal harga, tinggal sesuaikan sama budget. Ada paket ekonomis hingga paket Sultan.', testiName0:'Aina Thalita',
+    testiQuote1:'MasyaAllah, pelayanan Catering Ukhuwah sangat baik, mulai dari pelayanan hingga hidangannya. Terima kasih banyak atas kerja sama dan pelayanannya.', testiName1:'Murni Mahmud',
+    testiQuote2:'Catering yang gercep, sat set, dari segi rasa sangat memuaskan, packaging premium, dan yang pastinya Halalan Thoyyiban, pastinya highly recommended.', testiName2:'Yusufefendy C21best',
+    testiQuote3:'Alhamdulillah menunya enak, lezat, halal. Kambingnya tidak bau sama sekali, empuk lagi. Ukhuwah Sidrap sudah pernah coba order, tidak mengecewakan, Ukhuwah di Makassar juga luar biasa. Biar beda cabang tapi kualitas tetap terjaga.', testiName3:'Iira Yuanita',
+    galeriFotos: [],
+    tentangFotos: []
+  };
+
+  var FIELDS = [
+    {group:'Kontak & Jam', key:'wa', label:'Nomor WhatsApp', type:'text'},
+    {group:'Kontak & Jam', key:'telp', label:'Nomor Telepon', type:'text'},
+    {group:'Kontak & Jam', key:'alamatJalan', label:'Alamat (jalan)', type:'text'},
+    {group:'Kontak & Jam', key:'alamatKota', label:'Alamat (kecamatan/kota)', type:'text'},
+    {group:'Kontak & Jam', key:'jamBukaNote', label:'Jam Buka', type:'text'},
+    {group:'Kontak & Jam', key:'jamTutup', label:'Jam Tutup', type:'text'},
+    {group:'Kontak & Jam', key:'ratingValue', label:'Rating Google', type:'text'},
+    {group:'Kontak & Jam', key:'ratingCount', label:'Jumlah Ulasan', type:'text'},
+    {group:'Teks & Layanan', key:'tagline', label:'Tagline Utama', type:'textarea'},
+    {group:'Teks & Layanan', key:'aboutHeading', label:'Judul Tentang Kami', type:'text'},
+    {group:'Teks & Layanan', key:'aboutBody', label:'Teks Tentang Kami', type:'textarea'},
+    {group:'Teks & Layanan', key:'layanan0', label:'Deskripsi: Aqiqah & Syukuran', type:'textarea'},
+    {group:'Teks & Layanan', key:'layanan1', label:'Deskripsi: Kambing Guling', type:'textarea'},
+    {group:'Teks & Layanan', key:'layanan2', label:'Deskripsi: Gulai Kambing', type:'textarea'},
+    {group:'Teks & Layanan', key:'layanan3', label:'Deskripsi: Acara Kantor', type:'textarea'},
+    {group:'Ulasan', key:'testiQuote0', label:'Ulasan 1 - Teks', type:'textarea'},
+    {group:'Ulasan', key:'testiName0', label:'Ulasan 1 - Nama', type:'text'},
+    {group:'Ulasan', key:'testiQuote1', label:'Ulasan 2 - Teks', type:'textarea'},
+    {group:'Ulasan', key:'testiName1', label:'Ulasan 2 - Nama', type:'text'},
+    {group:'Ulasan', key:'testiQuote2', label:'Ulasan 3 - Teks', type:'textarea'},
+    {group:'Ulasan', key:'testiName2', label:'Ulasan 3 - Nama', type:'text'},
+    {group:'Ulasan', key:'testiQuote3', label:'Ulasan 4 - Teks', type:'textarea'},
+    {group:'Ulasan', key:'testiName3', label:'Ulasan 4 - Nama', type:'text'}
+  ];
+
+  var currentGalleryItems = [];
+  var currentTentangFotoItems = [];
+  var tentangFotoTimer = null;
+  var tentangFotoIndex = 0;
+
+  function readCache(){ try{ return JSON.parse(localStorage.getItem(DATA_CACHE_KEY)) || {}; }catch(e){ return {}; } }
+  function writeCache(data){ try{ localStorage.setItem(DATA_CACHE_KEY, JSON.stringify(data)); }catch(e){} }
+  function mergeWithDefaults(saved){
+    var merged = {};
+    Object.keys(DEFAULTS).forEach(function(k){
+      var v = saved ? saved[k] : undefined;
+      merged[k] = (v !== undefined && v !== null) ? v : DEFAULTS[k];
+    });
+    return merged;
+  }
+  function loadData(){
+    if (!sb) return Promise.resolve(mergeWithDefaults(readCache()));
+    return sb.from('landing_pages').select('content').eq('slug', SLUG).single()
+      .then(function(res){
+        if (res.error || !res.data){ return mergeWithDefaults(readCache()); }
+        var merged = mergeWithDefaults(res.data.content);
+        writeCache(merged);
+        return merged;
+      })
+      .catch(function(){ return mergeWithDefaults(readCache()); });
+  }
+  function saveData(data){
+    writeCache(data);
+    if (!sb) return Promise.resolve(false);
+    var pw = getRuntimePw();
+    return sb.rpc('update_landing_page_content', { p_slug: SLUG, p_password: pw, p_content: data })
+      .then(function(res){ return !res.error && res.data === true; })
+      .catch(function(){ return false; });
+  }
+  function getRuntimePw(){ try{ return sessionStorage.getItem(PW_RUNTIME_KEY) || ''; }catch(e){ return ''; } }
+  function setRuntimePw(pw){ try{ sessionStorage.setItem(PW_RUNTIME_KEY, pw); }catch(e){} }
+  function clearRuntimePw(){ try{ sessionStorage.removeItem(PW_RUNTIME_KEY); }catch(e){} }
+  function digitsOnly(s){ return (s||'').replace(/\D/g,''); }
+  function intlNumber(s){ var d = digitsOnly(s); if (d.charAt(0)==='0') d = '62'+d.slice(1); return d; }
+
+  function renderGallery(items){
+    var grid = document.getElementById('galeriGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    var valid = (items || []).filter(function(it){ return it && it.src; });
+    if (!valid.length){
+      var empty = document.createElement('div');
+      empty.className = 'gallery-slot';
+      empty.innerHTML = '<div class="slot-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.2-2h5.6L16 6"/></svg><span>Foto segera ditambahkan</span></div>';
+      grid.appendChild(empty);
+      return;
+    }
+    valid.forEach(function(item){
+      var slot = document.createElement('div');
+      slot.className = 'gallery-slot has-photo';
+      var img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.caption || 'Foto Catering Ukhuwah';
+      slot.appendChild(img);
+      if (item.caption){
+        var cap = document.createElement('span');
+        cap.className = 'cap';
+        cap.textContent = item.caption;
+        slot.appendChild(cap);
+      }
+      grid.appendChild(slot);
+    });
+  }
+
+  function buildTentangFotoSlide(item){
+    var slide = document.createElement('div');
+    slide.className = 'tentang-photo-slide';
+    var img = document.createElement('img');
+    img.src = item.src;
+    img.alt = item.caption || 'Foto Catering Ukhuwah';
+    slide.appendChild(img);
+    if (item.caption){
+      var cap = document.createElement('span');
+      cap.className = 'cap';
+      cap.textContent = item.caption;
+      slide.appendChild(cap);
+    }
+    return slide;
+  }
+
+  function renderTentangFotos(items){
+    var track = document.getElementById('tentangFotoTrack');
+    if (!track) return;
+    if (tentangFotoTimer){ clearInterval(tentangFotoTimer); tentangFotoTimer = null; }
+    track.innerHTML = '';
+    track.style.transition = 'none';
+    track.style.transform = 'translateY(0)';
+    var valid = (items || []).filter(function(it){ return it && it.src; }).slice(0, 10);
+    if (!valid.length){
+      var empty = document.createElement('div');
+      empty.className = 'tentang-photo-slide tentang-photo-empty';
+      empty.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" width="26" height="26"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.2-2h5.6L16 6"/></svg><span>Foto segera ditambahkan</span>';
+      track.appendChild(empty);
+      return;
+    }
+    valid.forEach(function(item){ track.appendChild(buildTentangFotoSlide(item)); });
+    if (valid.length > 1){
+      track.appendChild(buildTentangFotoSlide(valid[0]));
+      tentangFotoIndex = 0;
+      tentangFotoTimer = setInterval(function(){
+        tentangFotoIndex++;
+        track.style.transition = 'transform .6s cubic-bezier(.4,0,.2,1)';
+        track.style.transform = 'translateY(-' + (tentangFotoIndex * 100) + '%)';
+        if (tentangFotoIndex === valid.length){
+          setTimeout(function(){
+            track.style.transition = 'none';
+            tentangFotoIndex = 0;
+            track.style.transform = 'translateY(0)';
+          }, 620);
+        }
+      }, 2000);
+    }
+  }
+
+  function applyData(data){
+    document.querySelectorAll('.f-wa-text').forEach(function(el){ el.textContent = data.wa; });
+    document.querySelectorAll('.f-telp-text').forEach(function(el){ el.textContent = data.telp; });
+    document.querySelectorAll('.f-jam-tutup').forEach(function(el){ el.textContent = data.jamTutup; });
+    document.querySelectorAll('.f-jam-buka').forEach(function(el){ el.textContent = data.jamBukaNote; });
+    document.querySelectorAll('.f-wa-href').forEach(function(el){
+      var msg = el.getAttribute('data-wa-msg') || '';
+      var href = 'https://wa.me/' + intlNumber(data.wa);
+      if (msg) href += '?text=' + encodeURIComponent(msg);
+      el.href = href;
+    });
+    document.querySelectorAll('.f-telp-href').forEach(function(el){ el.href = 'tel:+' + intlNumber(data.telp); });
+
+    var byId = function(id){ return document.getElementById(id); };
+    if (byId('f-ratingValue')) byId('f-ratingValue').textContent = data.ratingValue;
+    if (byId('f-ratingCount')) byId('f-ratingCount').textContent = data.ratingCount;
+    if (byId('f-tagline')) byId('f-tagline').textContent = data.tagline;
+    if (byId('f-aboutHeading')) byId('f-aboutHeading').textContent = data.aboutHeading;
+    if (byId('f-aboutBody')) byId('f-aboutBody').textContent = data.aboutBody;
+    if (byId('f-alamatJalan')) byId('f-alamatJalan').textContent = data.alamatJalan;
+    if (byId('f-alamatKota')) byId('f-alamatKota').textContent = data.alamatKota;
+    if (byId('f-alamatCombined')) byId('f-alamatCombined').textContent = data.alamatJalan + ', ' + data.alamatKota;
+    ['0','1','2','3'].forEach(function(n){
+      if (byId('f-layanan'+n)) byId('f-layanan'+n).textContent = data['layanan'+n];
+      if (byId('f-testiQuote'+n)) byId('f-testiQuote'+n).textContent = data['testiQuote'+n];
+      if (byId('f-testiName'+n)) byId('f-testiName'+n).textContent = data['testiName'+n];
+    });
+    if (byId('copyAlamatBtn')) byId('copyAlamatBtn').setAttribute('data-copy', data.alamatJalan + ', ' + data.alamatKota);
+    if (byId('copyWaBtn')) byId('copyWaBtn').setAttribute('data-copy', data.wa);
+
+    renderGallery(data.galeriFotos);
+    renderTentangFotos(data.tentangFotos);
+  }
+
+  function renderForm(data){
+    var form = document.getElementById('adminEditForm');
+    if (!form) return;
+    form.innerHTML = '';
+    var groups = {}, order = [];
+    FIELDS.forEach(function(f){
+      if (!groups[f.group]){ groups[f.group] = []; order.push(f.group); }
+      groups[f.group].push(f);
+    });
+    order.forEach(function(groupName){
+      var title = document.createElement('div');
+      title.className = 'admin-group-title';
+      title.textContent = groupName;
+      form.appendChild(title);
+      var rowWrap = document.createElement('div');
+      rowWrap.className = 'admin-field-row';
+      groups[groupName].forEach(function(f){
+        var wrap = document.createElement('div');
+        wrap.className = 'admin-field';
+        var label = document.createElement('label');
+        label.setAttribute('for', 'in-'+f.key);
+        label.textContent = f.label;
+        wrap.appendChild(label);
+        if (f.type === 'textarea'){
+          var ta = document.createElement('textarea');
+          ta.id = 'in-'+f.key; ta.name = f.key; ta.value = data[f.key] || '';
+          wrap.appendChild(ta);
+        } else if (f.type === 'text'){
+          var inp = document.createElement('input');
+          inp.type = 'text'; inp.id = 'in-'+f.key; inp.name = f.key; inp.value = data[f.key] || '';
+          wrap.appendChild(inp);
+        }
+        rowWrap.appendChild(wrap);
+      });
+      form.appendChild(rowWrap);
+      if (groupName === 'Teks & Layanan'){
+        renderTentangFotoGroup(form, data);
+        renderGalleryGroup(form, data);
+      }
+    });
+  }
+
+  function renderTentangFotoGroup(form, data){
+    var title = document.createElement('div');
+    title.className = 'admin-group-title';
+    title.textContent = 'Foto Tentang Kami (slot kecil, maks. 10 foto)';
+    form.appendChild(title);
+
+    var note = document.createElement('p');
+    note.className = 'admin-note';
+    note.style.marginBottom = '0.6rem';
+    note.textContent = 'Foto ini muncul di panel kecil vertikal pada bagian Tentang Kami, bergeser otomatis dari bawah ke atas tiap 2 detik. Maksimal 10 foto, dan sebaiknya tiap foto di bawah 500 KB supaya halaman tetap cepat dibuka (kecilkan dulu pakai TinyPNG atau Squoosh, gratis). Boleh pakai foto flyer, hidangan terbaik, atau dokumentasi acara, lalu isi keterangan singkat supaya mudah dibaca.';
+    form.appendChild(note);
+
+    var list = document.createElement('div');
+    list.className = 'admin-gallery-list';
+    form.appendChild(list);
+
+    var addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'btn btn-outline btn-sm';
+    addBtn.style.marginTop = '0.7rem';
+
+    currentTentangFotoItems = (data.tentangFotos || []).map(function(it){
+      return { src: (it && it.src) || '', caption: (it && it.caption) || '' };
+    });
+    if (!currentTentangFotoItems.length) currentTentangFotoItems.push({ src:'', caption:'' });
+
+    function draw(){
+      list.innerHTML = '';
+      currentTentangFotoItems.forEach(function(item, idx){
+        var row = document.createElement('div');
+        row.className = 'admin-img-row';
+        var img = document.createElement('img');
+        img.className = 'admin-img-preview';
+        if (item.src){ img.src = item.src; } else { img.style.visibility = 'hidden'; }
+        var sizeWarn = document.createElement('span');
+        sizeWarn.className = 'admin-error';
+        sizeWarn.hidden = true;
+        var fileInp = document.createElement('input');
+        fileInp.type = 'file'; fileInp.accept = 'image/*';
+        fileInp.addEventListener('change', function(){
+          var file = this.files && this.files[0];
+          if (!file) return;
+          var kb = Math.round(file.size / 1024);
+          if (kb > 500){
+            sizeWarn.textContent = 'Ukuran foto ini sekitar ' + kb + ' KB, sebaiknya dikecilkan dulu sampai di bawah 500 KB.';
+            sizeWarn.hidden = false;
+          } else {
+            sizeWarn.hidden = true;
+          }
+          var reader = new FileReader();
+          reader.onload = function(){
+            item.src = reader.result;
+            img.src = reader.result;
+            img.style.visibility = 'visible';
+          };
+          reader.readAsDataURL(file);
+        });
+        var capInp = document.createElement('input');
+        capInp.type = 'text';
+        capInp.placeholder = 'Keterangan foto (boleh dikosongkan)';
+        capInp.value = item.caption || '';
+        capInp.addEventListener('input', function(){ item.caption = capInp.value; });
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-outline btn-sm';
+        removeBtn.textContent = 'Hapus Foto Ini';
+        removeBtn.addEventListener('click', function(){
+          currentTentangFotoItems.splice(idx, 1);
+          if (!currentTentangFotoItems.length) currentTentangFotoItems.push({ src:'', caption:'' });
+          draw();
+        });
+        row.appendChild(img); row.appendChild(fileInp); row.appendChild(capInp); row.appendChild(removeBtn); row.appendChild(sizeWarn);
+        list.appendChild(row);
+      });
+      addBtn.textContent = '+ Tambah Foto (' + currentTentangFotoItems.length + '/10)';
+      addBtn.disabled = currentTentangFotoItems.length >= 10;
+      addBtn.style.opacity = addBtn.disabled ? '0.5' : '1';
+      addBtn.style.cursor = addBtn.disabled ? 'not-allowed' : 'pointer';
+    }
+    draw();
+
+    addBtn.addEventListener('click', function(){
+      if (currentTentangFotoItems.length >= 10) return;
+      currentTentangFotoItems.push({ src:'', caption:'' });
+      draw();
+    });
+    form.appendChild(addBtn);
+  }
+
+  function renderGalleryGroup(form, data){
+    var title = document.createElement('div');
+    title.className = 'admin-group-title';
+    title.textContent = 'Galeri Foto';
+    form.appendChild(title);
+
+    var note = document.createElement('p');
+    note.className = 'admin-note';
+    note.style.marginBottom = '0.6rem';
+    note.textContent = 'Foto boleh ditambah sebanyak apapun, klik Tambah Foto untuk slot baru, atau Hapus Foto Ini untuk menghapus salah satu. Sebaiknya ukuran tiap foto di bawah 500 KB supaya halaman tetap cepat dibuka, kecilkan dulu fotonya sebelum diupload, bisa pakai TinyPNG atau Squoosh (gratis).';
+    form.appendChild(note);
+
+    var list = document.createElement('div');
+    list.className = 'admin-gallery-list';
+    form.appendChild(list);
+
+    currentGalleryItems = (data.galeriFotos || []).map(function(it){
+      return { src: (it && it.src) || '', caption: (it && it.caption) || '' };
+    });
+    if (!currentGalleryItems.length) currentGalleryItems.push({ src:'', caption:'' });
+
+    function draw(){
+      list.innerHTML = '';
+      currentGalleryItems.forEach(function(item, idx){
+        var row = document.createElement('div');
+        row.className = 'admin-img-row';
+        var img = document.createElement('img');
+        img.className = 'admin-img-preview';
+        if (item.src){ img.src = item.src; } else { img.style.visibility = 'hidden'; }
+        var sizeWarn = document.createElement('span');
+        sizeWarn.className = 'admin-error';
+        sizeWarn.hidden = true;
+        var fileInp = document.createElement('input');
+        fileInp.type = 'file'; fileInp.accept = 'image/*';
+        fileInp.addEventListener('change', function(){
+          var file = this.files && this.files[0];
+          if (!file) return;
+          var kb = Math.round(file.size / 1024);
+          if (kb > 500){
+            sizeWarn.textContent = 'Ukuran foto ini sekitar ' + kb + ' KB, sebaiknya dikecilkan dulu sampai di bawah 500 KB.';
+            sizeWarn.hidden = false;
+          } else {
+            sizeWarn.hidden = true;
+          }
+          var reader = new FileReader();
+          reader.onload = function(){
+            item.src = reader.result;
+            img.src = reader.result;
+            img.style.visibility = 'visible';
+          };
+          reader.readAsDataURL(file);
+        });
+        var capInp = document.createElement('input');
+        capInp.type = 'text';
+        capInp.placeholder = 'Keterangan foto (boleh dikosongkan)';
+        capInp.value = item.caption || '';
+        capInp.addEventListener('input', function(){ item.caption = capInp.value; });
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-outline btn-sm';
+        removeBtn.textContent = 'Hapus Foto Ini';
+        removeBtn.addEventListener('click', function(){
+          currentGalleryItems.splice(idx, 1);
+          if (!currentGalleryItems.length) currentGalleryItems.push({ src:'', caption:'' });
+          draw();
+        });
+        row.appendChild(img); row.appendChild(fileInp); row.appendChild(capInp); row.appendChild(removeBtn); row.appendChild(sizeWarn);
+        list.appendChild(row);
+      });
+    }
+    draw();
+
+    var addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'btn btn-outline btn-sm';
+    addBtn.textContent = '+ Tambah Foto';
+    addBtn.style.marginTop = '0.7rem';
+    addBtn.addEventListener('click', function(){
+      currentGalleryItems.push({ src:'', caption:'' });
+      draw();
+    });
+    form.appendChild(addBtn);
+  }
+
+  var adminPanel = document.getElementById('adminPanel');
+  var adminLoginView = document.getElementById('adminLoginView');
+  var adminEditView = document.getElementById('adminEditView');
+  var adminLoginForm = document.getElementById('adminLoginForm');
+  var adminPwInput = document.getElementById('adminPwInput');
+  var adminLoginError = document.getElementById('adminLoginError');
+  var adminEditForm = document.getElementById('adminEditForm');
+  var adminSaveMsg = document.getElementById('adminSaveMsg');
+  var adminResetBtn = document.getElementById('adminReset');
+  var adminChangePwToggle = document.getElementById('adminChangePwToggle');
+  var adminPwChange = document.getElementById('adminPwChange');
+  var adminPwNew = document.getElementById('adminPwNew');
+  var adminPwConfirm = document.getElementById('adminPwConfirm');
+  var adminPwSave = document.getElementById('adminPwSave');
+  var adminPwMsg = document.getElementById('adminPwMsg');
+  var adminLogout = document.getElementById('adminLogout');
+
+  function showLoginView(){
+    if (!adminPanel) return;
+    adminEditView.hidden = true;
+    adminLoginView.hidden = false;
+    adminLoginError.hidden = true;
+    if (adminPwInput) adminPwInput.value = '';
+  }
+  function showEditView(){
+    if (!adminPanel) return;
+    adminLoginView.hidden = true;
+    adminEditView.hidden = false;
+    adminEditForm.innerHTML = '<p class="admin-note">Memuat data...</p>';
+    loadData().then(function(data){ renderForm(data); });
+  }
+  function openAdminFromHash(){
+    if (!adminPanel) return;
+    if (location.hash.toLowerCase() === '#admin'){
+      adminPanel.classList.add('open');
+      var loggedIn = false;
+      try{ loggedIn = sessionStorage.getItem(LOGIN_KEY) === '1' && !!getRuntimePw(); }catch(e){}
+      if (loggedIn) showEditView(); else showLoginView();
+    }
+  }
+
+  if (adminLoginForm){
+    adminLoginForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var submitBtn = adminLoginForm.querySelector('button[type=submit]');
+      var pwVal = adminPwInput.value;
+      if (!sb){
+        adminLoginError.textContent = 'Tidak bisa terhubung ke server, coba lagi nanti.';
+        adminLoginError.hidden = false;
+        return;
+      }
+      if (submitBtn) submitBtn.disabled = true;
+      sb.rpc('verify_landing_page_password', { p_slug: SLUG, p_password: pwVal }).then(function(res){
+        if (submitBtn) submitBtn.disabled = false;
+        if (res.error || res.data !== true){
+          adminLoginError.textContent = 'Password salah, coba lagi.';
+          adminLoginError.hidden = false;
+          return;
+        }
+        try{ sessionStorage.setItem(LOGIN_KEY, '1'); }catch(e){}
+        setRuntimePw(pwVal);
+        adminLoginError.hidden = true;
+        showEditView();
+      }).catch(function(){
+        if (submitBtn) submitBtn.disabled = false;
+        adminLoginError.textContent = 'Gagal terhubung ke server, coba lagi.';
+        adminLoginError.hidden = false;
+      });
+    });
+  }
+  if (adminEditForm){
+    adminEditForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var submitBtn = adminEditForm.closest ? document.querySelector('button[form=adminEditForm]') : null;
+      loadData().then(function(data){
+        FIELDS.forEach(function(f){
+          var el = document.getElementById('in-'+f.key);
+          if (el){ data[f.key] = el.value; }
+        });
+        data.galeriFotos = currentGalleryItems
+          .filter(function(it){ return it && it.src; })
+          .map(function(it){ return { src: it.src, caption: it.caption || '' }; });
+        data.tentangFotos = currentTentangFotoItems
+          .filter(function(it){ return it && it.src; })
+          .slice(0, 10)
+          .map(function(it){ return { src: it.src, caption: it.caption || '' }; });
+        if (submitBtn) submitBtn.disabled = true;
+        saveData(data).then(function(ok){
+          if (submitBtn) submitBtn.disabled = false;
+          applyData(data);
+          renderForm(data);
+          if (adminSaveMsg){
+            adminSaveMsg.textContent = ok ? 'Tersimpan.' : 'Gagal tersimpan ke database, coba lagi.';
+            adminSaveMsg.style.color = ok ? '' : '#C23A3A';
+            adminSaveMsg.hidden = false;
+            setTimeout(function(){ adminSaveMsg.hidden = true; }, 2200);
+          }
+        });
+      });
+    });
+  }
+  if (adminResetBtn){
+    var resetArmed = false, resetTimer = null;
+    adminResetBtn.addEventListener('click', function(){
+      if (!resetArmed){
+        resetArmed = true;
+        adminResetBtn.textContent = 'Yakin? Klik lagi untuk reset';
+        resetTimer = setTimeout(function(){ resetArmed = false; adminResetBtn.textContent = 'Kembalikan ke Default'; }, 3000);
+        return;
+      }
+      resetArmed = false;
+      clearTimeout(resetTimer);
+      try{ localStorage.removeItem(DATA_CACHE_KEY); }catch(e){}
+      saveData(DEFAULTS).then(function(){
+        return loadData();
+      }).then(function(data){
+        applyData(data);
+        renderForm(data);
+        adminResetBtn.textContent = 'Kembalikan ke Default';
+        if (adminSaveMsg){
+          adminSaveMsg.textContent = 'Dikembalikan ke tampilan default.';
+          adminSaveMsg.hidden = false;
+          setTimeout(function(){ adminSaveMsg.hidden = true; }, 2200);
+        }
+      });
+    });
+  }
+  if (adminChangePwToggle){
+    adminChangePwToggle.addEventListener('click', function(){
+      adminPwChange.classList.toggle('open');
+      if (adminPwMsg) adminPwMsg.hidden = true;
+    });
+  }
+  if (adminPwSave){
+    adminPwSave.addEventListener('click', function(){
+      var a = adminPwNew.value, b = adminPwConfirm.value;
+      if (a.length < 4 || a !== b){
+        adminPwMsg.textContent = 'Password tidak cocok atau kurang dari 4 karakter.';
+        adminPwMsg.style.color = '#C23A3A';
+        adminPwMsg.hidden = false;
+        return;
+      }
+      if (!sb){
+        adminPwMsg.textContent = 'Tidak bisa terhubung ke server.';
+        adminPwMsg.style.color = '#C23A3A';
+        adminPwMsg.hidden = false;
+        return;
+      }
+      adminPwSave.disabled = true;
+      sb.rpc('change_landing_page_password', { p_slug: SLUG, p_old_password: getRuntimePw(), p_new_password: a })
+        .then(function(res){
+          adminPwSave.disabled = false;
+          if (res.error || res.data !== true){
+            adminPwMsg.textContent = 'Gagal mengganti password, coba lagi.';
+            adminPwMsg.style.color = '#C23A3A';
+            adminPwMsg.hidden = false;
+            return;
+          }
+          setRuntimePw(a);
+          adminPwNew.value = ''; adminPwConfirm.value = '';
+          adminPwMsg.style.color = '';
+          adminPwMsg.textContent = 'Password diganti.';
+          adminPwMsg.hidden = false;
+          setTimeout(function(){ adminPwMsg.hidden = true; adminPwChange.classList.remove('open'); }, 1600);
+        })
+        .catch(function(){
+          adminPwSave.disabled = false;
+          adminPwMsg.textContent = 'Gagal terhubung ke server.';
+          adminPwMsg.style.color = '#C23A3A';
+          adminPwMsg.hidden = false;
+        });
+    });
+  }
+  if (adminLogout){
+    adminLogout.addEventListener('click', function(){
+      try{ sessionStorage.removeItem(LOGIN_KEY); }catch(e){}
+      clearRuntimePw();
+      showLoginView();
+    });
+  }
+  ['adminClose','adminClose2'].forEach(function(id){
+    var btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', function(){ adminPanel.classList.remove('open'); });
+  });
+  window.addEventListener('hashchange', openAdminFromHash);
+
+  loadData().then(function(data){ applyData(data); });
+  openAdminFromHash();
+})();
+</script>
