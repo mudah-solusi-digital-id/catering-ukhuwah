@@ -424,18 +424,18 @@ footer.credit .credit-line{margin-top:0.3rem;}
       <div class="keunggulan-grid">
         <div class="keunggulan-item">
           <div class="num">01</div>
-          <h3>Dipercaya ratusan pelanggan</h3>
-          <p>748 orang sudah menuliskan pengalamannya di Google Maps.</p>
+          <h3 id="f-keunggulan0Judul">Dipercaya ratusan pelanggan</h3>
+          <p id="f-keunggulan0Teks">748 orang sudah menuliskan pengalamannya di Google Maps.</p>
         </div>
         <div class="keunggulan-item">
           <div class="num">02</div>
-          <h3>Penilaian pelanggan sangat tinggi</h3>
-          <p>Rating rata-rata 4,9 dari 5 bintang.</p>
+          <h3 id="f-keunggulan1Judul">Penilaian pelanggan sangat tinggi</h3>
+          <p id="f-keunggulan1Teks">Rating rata-rata 4,9 dari 5 bintang.</p>
         </div>
         <div class="keunggulan-item">
           <div class="num">03</div>
-          <h3>Pelayanan, rasa, dan halal</h3>
-          <p>Pelanggan memuji pelayanan dan pramusaji yang profesional, menu yang enak, kemasan premium, pengerjaan yang cepat, serta hidangan yang halal.</p>
+          <h3 id="f-keunggulan2Judul">Pelayanan, rasa, dan halal</h3>
+          <p id="f-keunggulan2Teks">Pelanggan memuji pelayanan dan pramusaji yang profesional, menu yang enak, kemasan premium, pengerjaan yang cepat, serta hidangan yang halal.</p>
         </div>
       </div>
       <div class="tentang-photo-panel">
@@ -621,6 +621,9 @@ footer.credit .credit-line{margin-top:0.3rem;}
     tagline:'Catering di Jalan Perintis Kemerdekaan Km 14, Makassar, dengan rating 4,9 dari 748 ulasan Google.',
     aboutHeading:'Lahir dari Kepercayaan Masyarakat',
     aboutBody:'Catering Ukhuwah berlokasi di Jalan Perintis Kemerdekaan Km 14, Makassar. Di Google Maps, usaha ini mendapat rating 4,9 dari 748 ulasan pelanggan.',
+    keunggulan0Judul:'Dipercaya ratusan pelanggan', keunggulan0Teks:'748 orang sudah menuliskan pengalamannya di Google Maps.',
+    keunggulan1Judul:'Penilaian pelanggan sangat tinggi', keunggulan1Teks:'Rating rata-rata 4,9 dari 5 bintang.',
+    keunggulan2Judul:'Pelayanan, rasa, dan halal', keunggulan2Teks:'Pelanggan memuji pelayanan dan pramusaji yang profesional, menu yang enak, kemasan premium, pengerjaan yang cepat, serta hidangan yang halal.',
     layanan0:'Paket aqiqah dan syukuran lengkap, menu yang paling banyak dipercaya pelanggan.',
     layanan1:'Kambing guling utuh untuk acara spesial, jadi menu favorit yang paling sering dipesan.',
     layanan2:'Gulai kambing dan olahan kambing lainnya, disiapkan halal dengan resep khas.',
@@ -645,6 +648,12 @@ footer.credit .credit-line{margin-top:0.3rem;}
     {group:'Teks & Layanan', key:'tagline', label:'Tagline Utama', type:'textarea'},
     {group:'Teks & Layanan', key:'aboutHeading', label:'Judul Tentang Kami', type:'text'},
     {group:'Teks & Layanan', key:'aboutBody', label:'Teks Tentang Kami', type:'textarea'},
+    {group:'Teks & Layanan', key:'keunggulan0Judul', label:'Poin 1 - Judul', type:'text'},
+    {group:'Teks & Layanan', key:'keunggulan0Teks', label:'Poin 1 - Deskripsi', type:'textarea'},
+    {group:'Teks & Layanan', key:'keunggulan1Judul', label:'Poin 2 - Judul', type:'text'},
+    {group:'Teks & Layanan', key:'keunggulan1Teks', label:'Poin 2 - Deskripsi', type:'textarea'},
+    {group:'Teks & Layanan', key:'keunggulan2Judul', label:'Poin 3 - Judul', type:'text'},
+    {group:'Teks & Layanan', key:'keunggulan2Teks', label:'Poin 3 - Deskripsi', type:'textarea'},
     {group:'Teks & Layanan', key:'layanan0', label:'Deskripsi: Aqiqah & Syukuran', type:'textarea'},
     {group:'Teks & Layanan', key:'layanan1', label:'Deskripsi: Kambing Guling', type:'textarea'},
     {group:'Teks & Layanan', key:'layanan2', label:'Deskripsi: Gulai Kambing', type:'textarea'},
@@ -800,6 +809,10 @@ footer.credit .credit-line{margin-top:0.3rem;}
     if (byId('f-alamatJalan')) byId('f-alamatJalan').textContent = data.alamatJalan;
     if (byId('f-alamatKota')) byId('f-alamatKota').textContent = data.alamatKota;
     if (byId('f-alamatCombined')) byId('f-alamatCombined').textContent = data.alamatJalan + ', ' + data.alamatKota;
+    ['0','1','2'].forEach(function(n){
+      if (byId('f-keunggulan'+n+'Judul')) byId('f-keunggulan'+n+'Judul').textContent = data['keunggulan'+n+'Judul'];
+      if (byId('f-keunggulan'+n+'Teks')) byId('f-keunggulan'+n+'Teks').textContent = data['keunggulan'+n+'Teks'];
+    });
     ['0','1','2','3'].forEach(function(n){
       if (byId('f-layanan'+n)) byId('f-layanan'+n).textContent = data['layanan'+n];
       if (byId('f-testiQuote'+n)) byId('f-testiQuote'+n).textContent = data['testiQuote'+n];
